@@ -1,4 +1,6 @@
-export default function Footer() {
+export default function Footer({ settings }: { settings?: any }) {
+  const villageName = settings?.village_name || "Desa Sukamaju";
+  
   return (
     <footer className="border-t border-slate-200 bg-slate-50">
       <div className="container-main py-12">
@@ -8,7 +10,7 @@ export default function Footer() {
               Website Resmi
             </p>
             <h3 className="mt-2 text-xl font-bold text-slate-900">
-              Desa Sukamaju
+              {villageName}
             </h3>
             <p className="mt-3 max-w-sm text-sm leading-7 text-slate-600">
               Portal informasi desa yang memudahkan warga mengakses layanan,
@@ -44,16 +46,15 @@ export default function Footer() {
               Kontak
             </h4>
             <div className="mt-4 space-y-3 text-sm text-slate-600">
-              <p>Jl. Raya Desa Sukamaju No. 1</p>
-              <p>Kecamatan Contoh, Kabupaten Contoh</p>
-              <p>0812-3456-7890</p>
-              <p>desasukamaju@email.com</p>
+              <p>{settings?.address || "Jl. Raya Desa Sukamaju No. 1"}</p>
+              <p>{settings?.contact_phone || "0812-3456-7890"}</p>
+              <p>{settings?.contact_email || "desasukamaju@email.com"}</p>
             </div>
           </div>
         </div>
 
         <div className="mt-10 border-t border-slate-200 pt-6 text-sm text-slate-500">
-          © 2026 Desa Sukamaju. Semua hak dilindungi.
+          © 2026 {villageName}. Semua hak dilindungi.
         </div>
       </div>
     </footer>

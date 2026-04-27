@@ -11,13 +11,13 @@ type Props = {
 
 export default async function DetailBeritaPage({ params }: Props) {
   const { slug } = await params;
-  const post = await getPostBySlug(slug);
+  const { post, settings } = await getPostBySlug(slug);
 
   if (!post) notFound();
 
   return (
     <>
-      <Navbar />
+      <Navbar villageName={settings?.village_name} />
       <main className="bg-white">
         <section className="border-b border-slate-200 bg-slate-50 py-12 md:py-16">
           <div className="container-main max-w-4xl">
@@ -53,7 +53,7 @@ export default async function DetailBeritaPage({ params }: Props) {
           </div>
         </section>
       </main>
-      <Footer />
+      <Footer settings={settings} />
     </>
   );
 }

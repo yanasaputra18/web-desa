@@ -12,7 +12,7 @@ const navItems = [
   { label: "Kontak", href: "/kontak" },
 ];
 
-export default function Navbar() {
+export default function Navbar({ villageName = "Desa Sukamaju" }: { villageName?: string }) {
   const [open, setOpen] = useState(false);
 
   return (
@@ -21,7 +21,7 @@ export default function Navbar() {
         <div className="flex h-20 items-center justify-between">
           <Link href="/" className="flex items-center gap-3">
             <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-emerald-600 text-lg font-bold text-white">
-              D
+              {villageName.charAt(0)}
             </div>
 
             <div className="leading-tight">
@@ -29,7 +29,7 @@ export default function Navbar() {
                 Website Resmi
               </p>
               <h1 className="text-lg font-bold text-slate-900">
-                Desa Sukamaju
+                {villageName}
               </h1>
             </div>
           </Link>

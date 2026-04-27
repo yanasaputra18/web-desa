@@ -38,12 +38,18 @@ export async function getPublicSiteData() {
 export async function getPostBySlug(slug: string) {
   const supabase = await createClient();
 
-  const { data } = await supabase
+  const { data: post } = await supabase
     .from("posts")
     .select("*")
     .eq("slug", slug)
     .eq("is_published", true)
     .maybeSingle();
 
-  return data;
+  const { data: settings } = await supabase
+    .from("site_settings")
+    .select("*")
+    .limit(1)
+    .maybeSingle();
+
+  return { post, settings };
 }

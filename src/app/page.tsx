@@ -5,13 +5,29 @@ import Footer from "@/components/layout/Footer";
 import { getPublicSiteData } from "@/lib/public-data";
 import { placeholderImages } from "@/lib/placeholder-images";
 
+function safeImageUrl(src?: string | null, fallback = placeholderImages.hero) {
+  if (!src) return fallback;
+
+  const cleanSrc = src.trim();
+
+  if (
+    cleanSrc.startsWith("http://") ||
+    cleanSrc.startsWith("https://") ||
+    cleanSrc.startsWith("/")
+  ) {
+    return cleanSrc;
+  }
+
+  return fallback;
+}
+
 export default async function HomePage() {
   const { settings, services, posts, galleryItems, officials } =
     await getPublicSiteData();
 
   return (
     <>
-      <Navbar />
+      <Navbar villageName={settings?.village_name} />
 
       <main className="bg-white">
         <section className="border-b border-slate-200 bg-gradient-to-b from-emerald-50 via-white to-white">
@@ -48,6 +64,7 @@ export default async function HomePage() {
                     Layanan desa
                   </p>
                 </div>
+
                 <div className="card-soft p-5">
                   <p className="text-3xl font-bold text-emerald-700">
                     {posts.length}+
@@ -56,6 +73,7 @@ export default async function HomePage() {
                     Berita terbaru
                   </p>
                 </div>
+
                 <div className="card-soft p-5">
                   <p className="text-3xl font-bold text-emerald-700">
                     {officials.length}+
@@ -70,7 +88,10 @@ export default async function HomePage() {
             <div className="relative overflow-hidden rounded-[2rem] border border-slate-200 shadow-sm">
               <div className="relative aspect-[16/11]">
                 <Image
-                  src={settings?.hero_image_url || placeholderImages.hero}
+                  src={safeImageUrl(
+                    settings?.hero_image_url,
+                    placeholderImages.hero
+                  )}
                   alt="Desa"
                   fill
                   priority
@@ -78,6 +99,7 @@ export default async function HomePage() {
                   className="object-cover"
                 />
               </div>
+
               <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-slate-950/65 via-slate-950/25 to-transparent p-6 text-white">
                 <p className="text-sm uppercase tracking-[0.2em] text-emerald-100">
                   Selamat Datang
@@ -160,13 +182,17 @@ export default async function HomePage() {
                 >
                   <div className="relative h-56">
                     <Image
-                      src={post.cover_url || placeholderImages.news[index % 3]}
+                      src={safeImageUrl(
+                        post.cover_url,
+                        placeholderImages.news[index % placeholderImages.news.length]
+                      )}
                       alt={post.title}
                       fill
                       sizes="(min-width: 1024px) 33vw, 100vw"
                       className="object-cover"
                     />
                   </div>
+
                   <div className="p-6">
                     <p className="text-xs font-semibold uppercase tracking-[0.18em] text-emerald-700">
                       Berita Desa
@@ -202,36 +228,44 @@ export default async function HomePage() {
               {(galleryItems.length
                 ? galleryItems.slice(0, 6)
                 : new Array(6).fill(null)
-              ).map((item: any, index) => (
-                <div
-                  key={item?.id ?? index}
-                  className="card-soft overflow-hidden"
-                >
-                  <div className="relative aspect-[4/3]">
-                    <Image
-                      src={item?.image_url || placeholderImages.gallery[index]}
-                      alt={item?.title || "Galeri desa"}
-                      fill
-                      sizes="(min-width: 1280px) 33vw, (min-width: 640px) 50vw, 100vw"
-                      className="object-cover"
-                    />
+              ).map((item: any, index) => {
+                const fallbackImage =
+                  placeholderImages.gallery[
+                    index % placeholderImages.gallery.length
+                  ];
+
+                return (
+                  <div
+                    key={item?.id ?? index}
+                    className="card-soft overflow-hidden"
+                  >
+                    <div className="relative aspect-[4/3]">
+                      <Image
+                        src={safeImageUrl(item?.image_url, fallbackImage)}
+                        alt={item?.title || "Galeri desa"}
+                        fill
+                        sizes="(min-width: 1280px) 33vw, (min-width: 640px) 50vw, 100vw"
+                        className="object-cover"
+                      />
+                    </div>
+
+                    <div className="p-5">
+                      <h3 className="text-lg font-bold text-slate-900">
+                        {item?.title ?? "Kegiatan Desa"}
+                      </h3>
+                      <p className="mt-2 text-sm text-slate-600">
+                        {item?.description ?? "Dokumentasi kegiatan desa."}
+                      </p>
+                    </div>
                   </div>
-                  <div className="p-5">
-                    <h3 className="text-lg font-bold text-slate-900">
-                      {item?.title ?? "Kegiatan Desa"}
-                    </h3>
-                    <p className="mt-2 text-sm text-slate-600">
-                      {item?.description ?? "Dokumentasi kegiatan desa."}
-                    </p>
-                  </div>
-                </div>
-              ))}
+                );
+              })}
             </div>
           </div>
         </section>
       </main>
 
-      <Footer />
+      <Footer settings={settings} />
     </>
   );
 }

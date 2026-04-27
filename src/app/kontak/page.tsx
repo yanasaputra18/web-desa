@@ -25,7 +25,7 @@ export default async function KontakPage() {
 
   return (
     <>
-      <Navbar />
+      <Navbar villageName={settings?.village_name} />
       <main className="bg-white">
         <PageHero
           eyebrow="Kontak Desa"
@@ -94,7 +94,7 @@ export default async function KontakPage() {
           </div>
         </section>
       </main>
-      <Footer />
+      <Footer settings={settings} />
     </>
   );
 }

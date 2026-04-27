@@ -9,7 +9,7 @@ export default async function ProfilPage() {
 
   return (
     <>
-      <Navbar />
+      <Navbar villageName={settings?.village_name} />
       <main className="bg-white">
         <PageHero
           eyebrow="Profil Desa"
@@ -84,7 +84,7 @@ export default async function ProfilPage() {
           </div>
         </section>
       </main>
-      <Footer />
+      <Footer settings={settings} />
     </>
   );
 }

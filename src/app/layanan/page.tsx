@@ -9,7 +9,7 @@ export default async function LayananPage() {
 
   return (
     <>
-      <Navbar />
+      <Navbar villageName={settings?.village_name} />
       <main className="bg-white">
         <PageHero
           eyebrow="Layanan Desa"
@@ -44,7 +44,7 @@ export default async function LayananPage() {
           </div>
         </section>
       </main>
-      <Footer />
+      <Footer settings={settings} />
     </>
   );
 }

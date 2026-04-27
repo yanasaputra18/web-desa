@@ -6,11 +6,11 @@ import { getPublicSiteData } from "@/lib/public-data";
 import { placeholderImages } from "@/lib/placeholder-images";
 
 export default async function GaleriPage() {
-  const { galleryItems } = await getPublicSiteData();
+  const { settings, galleryItems } = await getPublicSiteData();
 
   return (
     <>
-      <Navbar />
+      <Navbar villageName={settings?.village_name} />
       <main className="bg-white">
         <PageHero
           eyebrow="Galeri Desa"
@@ -29,7 +29,12 @@ export default async function GaleriPage() {
                 >
                   <div className="relative aspect-[4/3]">
                     <Image
-                      src={item?.image_url || placeholderImages.gallery[index]}
+                      src={
+                        item?.image_url ||
+                        placeholderImages.gallery[
+                          index % placeholderImages.gallery.length
+                        ]
+                      }
                       alt={item?.title || "Galeri desa"}
                       fill
                       sizes="(min-width: 1280px) 33vw, (min-width: 640px) 50vw, 100vw"
@@ -50,7 +55,7 @@ export default async function GaleriPage() {
           </div>
         </section>
       </main>
-      <Footer />
+      <Footer settings={settings} />
     </>
   );
 }

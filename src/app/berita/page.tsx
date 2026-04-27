@@ -7,11 +7,11 @@ import { getPublicSiteData } from "@/lib/public-data";
 import { placeholderImages } from "@/lib/placeholder-images";
 
 export default async function BeritaPage() {
-  const { posts } = await getPublicSiteData();
+  const { settings, posts } = await getPublicSiteData();
 
   return (
     <>
-      <Navbar />
+      <Navbar villageName={settings?.village_name} />
       <main className="bg-white">
         <PageHero
           eyebrow="Berita Desa"
@@ -53,7 +53,7 @@ export default async function BeritaPage() {
           </div>
         </section>
       </main>
-      <Footer />
+      <Footer settings={settings} />
     </>
   );
 }
