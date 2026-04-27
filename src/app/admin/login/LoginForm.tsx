@@ -16,12 +16,7 @@ export default function LoginForm() {
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     setLoading(true);
-    if (process.env.NEXT_PUBLIC_SUPABASE_URL?.includes("abcdefghijklmnop")) {
-      document.cookie = "mock_admin_session=true; path=/";
-      router.push("/admin/dashboard");
-      router.refresh();
-      return;
-    }
+    setMessage("");
 
     try {
       const { error } = await supabase.auth.signInWithPassword({
@@ -30,17 +25,15 @@ export default function LoginForm() {
       });
 
       if (error) {
-        setMessage(error.message);
+        setMessage("Email atau password salah.");
         setLoading(false);
         return;
       }
 
-      router.push("/admin/dashboard");
+      router.replace("/admin/dashboard");
       router.refresh();
-    } catch (err: any) {
-      setMessage(
-        "Gagal terhubung ke database. Pastikan pengaturan .env.local Anda benar."
-      );
+    } catch {
+      setMessage("Gagal login. Periksa koneksi atau konfigurasi Supabase.");
       setLoading(false);
     }
   }
@@ -48,6 +41,7 @@ export default function LoginForm() {
   return (
     <form onSubmit={handleSubmit} className="card-soft w-full max-w-md p-8">
       <h1 className="text-2xl font-bold text-slate-900">Login Admin Desa</h1>
+
       <p className="mt-2 text-sm text-slate-600">
         Masuk untuk mengelola berita, layanan, dan galeri desa.
       </p>
@@ -82,7 +76,7 @@ export default function LoginForm() {
         </div>
       </div>
 
-      {message ? <p className="mt-4 text-sm text-red-600">{message}</p> : null}
+      {message && <p className="mt-4 text-sm text-red-600">{message}</p>}
 
       <button
         type="submit"

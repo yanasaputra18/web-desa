@@ -68,8 +68,16 @@ export default async function ProfilPage() {
               {(officials.length ? officials : new Array(4).fill(null)).map(
                 (official: any, index: number) => (
                   <div key={official?.id ?? index} className="card-soft p-6">
-                    <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-emerald-100 text-xl font-bold text-emerald-700">
-                      {official?.name?.charAt(0) ?? "A"}
+                    <div className="flex h-16 w-16 items-center justify-center overflow-hidden rounded-2xl bg-emerald-100 text-xl font-bold text-emerald-700">
+                      {official?.photo_url ? (
+                        <img
+                          src={official.photo_url}
+                          alt={official.name}
+                          className="h-full w-full object-cover"
+                        />
+                      ) : (
+                        official?.name?.charAt(0) ?? "A"
+                      )}
                     </div>
                     <h4 className="mt-5 text-lg font-bold text-slate-900">
                       {official?.name ?? "Nama Aparatur"}

@@ -50,7 +50,7 @@ type Official = {
   id: number;
   name: string;
   position: string;
-  image_url: string;
+  photo_url: string;
   sort_order: number;
 };
 
@@ -123,7 +123,7 @@ export default function DashboardClient() {
     id: 0,
     name: "",
     position: "",
-    image_url: "",
+    photo_url: "",
     sort_order: 1,
   });
 
@@ -326,7 +326,7 @@ export default function DashboardClient() {
     const payload = {
       name: officialForm.name,
       position: officialForm.position,
-      image_url: officialForm.image_url,
+      photo_url: officialForm.photo_url,
       sort_order: Number(officialForm.sort_order),
     };
 
@@ -347,7 +347,7 @@ export default function DashboardClient() {
         id: 0,
         name: "",
         position: "",
-        image_url: "",
+        photo_url: "",
         sort_order: 1,
       });
 
@@ -1001,9 +1001,9 @@ export default function DashboardClient() {
               <input
                 className="w-full rounded-2xl border border-slate-200 px-4 py-3"
                 placeholder="Foto URL"
-                value={officialForm.image_url}
+                value={officialForm.photo_url}
                 onChange={(e) =>
-                  setOfficialForm((s) => ({ ...s, image_url: e.target.value }))
+                  setOfficialForm((s) => ({ ...s, photo_url: e.target.value }))
                 }
               />
               <input
@@ -1033,9 +1033,9 @@ export default function DashboardClient() {
               >
                 <div className="flex items-center gap-4">
                   <div className="h-16 w-16 overflow-hidden rounded-2xl bg-slate-100">
-                    {item.image_url && (
+                    {item.photo_url && (
                       <img
-                        src={item.image_url}
+                        src={item.photo_url}
                         alt={item.name}
                         className="h-full w-full object-cover"
                       />
@@ -1054,7 +1054,7 @@ export default function DashboardClient() {
                         id: item.id,
                         name: item.name,
                         position: item.position,
-                        image_url: item.image_url || "",
+                        photo_url: item.photo_url || "",
                         sort_order: item.sort_order,
                       })
                     }

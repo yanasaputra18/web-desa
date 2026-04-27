@@ -42,14 +42,14 @@ export default function Navbar({ villageName = "Desa Sukamaju" }: { villageName?
             ))}
           </nav>
 
-          <div className="hidden lg:block">
+          {/* <div className="hidden lg:block">
             <Link
               href="/admin/login"
               className="inline-flex items-center rounded-full bg-slate-900 px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-emerald-700"
             >
               Admin Login
             </Link>
-          </div>
+          </div> */}
 
           <button
             onClick={() => setOpen(!open)}
